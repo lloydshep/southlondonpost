@@ -1,0 +1,25 @@
+title: South London Post
+description: An open ontology and content aggregator for South London places
+baseurl: ""
+url: "https://lloydshep.github.io/southlondonpost"
+
+# Theme
+theme: minima
+
+# Navigation
+header_pages:
+  - docs/ontology-guide.md
+  - docs/borough-inclusion-rule.md
+  - docs/sources.md
+  - docs/prominence-scoring.md
+
+# Markdown settings
+markdown: kramdown
+highlighter: rouge
+
+# Exclude from build
+exclude:
+  - ontology/
+  - app/
+  - CONTRIBUTING.md
+  - "*.jsonld"

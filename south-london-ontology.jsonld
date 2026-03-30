@@ -1,0 +1,816 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "gео": "http://www.geonames.org/ontology#",
+    "os": "http://data.ordnancesurvey.co.uk/ontology/admingeo/",
+    "ons": "http://statistics.data.gov.uk/def/statistical-geography#",
+    "osm": "https://www.openstreetmap.org/",
+    "wd": "https://www.wikidata.org/entity/",
+    "tfl": "https://api.tfl.gov.uk/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "Place": "https://schema.org/Place",
+    "containsPlace": "https://schema.org/containsPlace",
+    "containedInPlace": "https://schema.org/containedInPlace",
+    "alternateName": "https://schema.org/alternateName",
+    "name": "https://schema.org/name",
+    "identifier": "https://schema.org/identifier",
+    "geo": "https://schema.org/geo",
+    "hasMap": "https://schema.org/hasMap",
+    "administrativeArea": "https://schema.org/AdministrativeArea",
+    "sameAs": "https://schema.org/sameAs",
+    "sourceAttribution": "dcterms:source",
+    "placeLevel": {
+      "@id": "skos:inScheme",
+      "@type": "@id"
+    },
+    "osmId": "osm:node",
+    "onsCode": "ons:code",
+    "osUprn": "os:UPRN",
+    "wikidataId": "wd:",
+    "governingBody": "os:localAuthority",
+    "ward": "os:ward",
+    "boundarySource": "dcterms:source",
+    "postalDistricts": "tfl:PostalDistrict",
+    "tflZones": "tfl:Zone"
+  },
+  "@graph": [
+    {
+      "@id": "https://southlondon.place/ontology",
+      "@type": "skos:ConceptScheme",
+      "dcterms:title": "South London Place Ontology",
+      "dcterms:description": "A four-level hierarchical ontology of places in South London, for use in local content aggregation. Each node is cross-referenced to authoritative public sources.",
+      "dcterms:creator": "South London Place Project",
+      "dcterms:license": "https://creativecommons.org/licenses/by/4.0/",
+      "dcterms:created": "2025-01-01",
+      "dcterms:source": [
+        "https://statistics.data.gov.uk/",
+        "https://www.openstreetmap.org/",
+        "https://www.wikidata.org/",
+        "https://api.tfl.gov.uk/"
+      ],
+      "boroughInclusionRule": {
+        "rule": "A London borough is included in this ontology if and only if it satisfies both of the following criteria: (1) it is one of the twelve statutory Inner London boroughs as defined by Schedule 1 of the London Government Act 1963 (c.33); and (2) it lies south of the River Thames.",
+        "resultingBoroughs": [
+          "London Borough of Lambeth",
+          "London Borough of Southwark",
+          "London Borough of Wandsworth",
+          "London Borough of Lewisham",
+          "Royal Borough of Greenwich"
+        ],
+        "explicitExclusions": {
+          "outerLondonBoroughs": "Croydon, Bromley, Merton, Sutton, Bexley, Kingston upon Thames and Richmond upon Thames are all south of the Thames but are Outer London boroughs under the 1963 Act and therefore outside scope.",
+          "innerLondonNorthOfThames": "Camden, Hackney, Hammersmith and Fulham, Islington, Kensington and Chelsea, Tower Hamlets, and Westminster are statutory Inner London boroughs but lie north of the Thames and are therefore outside scope.",
+          "richmond": "Richmond upon Thames straddles both banks of the Thames but is classified as an Outer London borough under the 1963 Act and is therefore outside scope regardless of its partial southern extent."
+        },
+        "greenwichNote": "The Royal Borough of Greenwich has a small northern section that touches the Thames at East Greenwich, but the borough is unambiguously classified as a south-of-Thames Inner London borough in all authoritative sources.",
+        "legislativeCitation": {
+          "title": "London Government Act 1963",
+          "schedule": "Schedule 1 — The London Boroughs",
+          "chapter": "c.33",
+          "url": "https://www.legislation.gov.uk/ukpga/1963/33/schedule/1",
+          "publisher": "Her Majesty's Stationery Office",
+          "accessedVia": "https://www.legislation.gov.uk/"
+        },
+        "alternativeDefinitionsConsidered": [
+          {
+            "name": "Boundary Commission for England 2011 grouping",
+            "boroughCount": 12,
+            "reasonRejected": "Includes Outer London boroughs (Croydon, Bromley, Merton, Sutton, Bexley, Kingston, Richmond) which significantly extends the geographic scope beyond the inner-city focus of this service."
+          },
+          {
+            "name": "GLA South West sub-region (London Plan 2008)",
+            "boroughCount": 7,
+            "reasonRejected": "Excludes Southwark, Lewisham, and Greenwich — placing Peckham and Greenwich outside South London, which contradicts common usage and editorial intent."
+          },
+          {
+            "name": "GLA South East sub-region (London Plan 2008)",
+            "boroughCount": 5,
+            "reasonRejected": "Excludes Lambeth and Wandsworth, omitting Brixton, Clapham, Tooting and Battersea — again contradicting common usage."
+          },
+          {
+            "name": "River Thames boundary (popular convention)",
+            "boroughCount": 12,
+            "reasonRejected": "No statutory basis; boundary is informal and not citable to a single authoritative source."
+          }
+        ]
+      },
+      "skos:hasTopConcept": {
+        "@id": "place:south-london"
+      }
+    },
+    {
+      "@id": "https://southlondon.place/ontology/levels",
+      "@type": "skos:Collection",
+      "skos:prefLabel": "Place level definitions",
+      "skos:member": [
+        {
+          "@id": "level:region",
+          "skos:prefLabel": "Region",
+          "skos:definition": "Top-level geographic region. In this ontology: South London as a whole.",
+          "skos:example": "South London",
+          "dcterms:source": "https://statistics.data.gov.uk/id/statistical-geography/E13000002"
+        },
+        {
+          "@id": "level:borough",
+          "skos:prefLabel": "Borough",
+          "skos:definition": "London Borough — a statutory local government area defined by the London Government Act 1963.",
+          "skos:example": "London Borough of Lambeth",
+          "dcterms:source": "https://statistics.data.gov.uk/id/statistical-geography/E09000022"
+        },
+        {
+          "@id": "level:neighbourhood",
+          "skos:prefLabel": "Neighbourhood",
+          "skos:definition": "A commonly recognised sub-area within a borough. May align with an electoral ward but is primarily defined by popular usage and OSM data.",
+          "skos:example": "Brixton",
+          "dcterms:source": "https://www.openstreetmap.org/"
+        },
+        {
+          "@id": "level:landmark",
+          "skos:prefLabel": "Landmark / Street / Site",
+          "skos:definition": "A specific named place, street, market, park, or institution within a neighbourhood.",
+          "skos:example": "Brixton Market",
+          "dcterms:source": "https://www.openstreetmap.org/"
+        }
+      ]
+    },
+    {
+      "@id": "place:south-london",
+      "@type": [
+        "Place",
+        "administrativeArea"
+      ],
+      "name": "South London",
+      "alternateName": [
+        "South of the River",
+        "South Bank (informal)"
+      ],
+      "placeLevel": "level:region",
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q1026698",
+        "https://en.wikipedia.org/wiki/South_London",
+        "https://www.openstreetmap.org/relation/5198727"
+      ],
+      "onsCode": "E13000002",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 51.465,
+        "longitude": -0.1146
+      },
+      "boundarySource": "https://www.legislation.gov.uk/ukpga/1963/33/schedule/1",
+      "containsPlace": [
+        {
+          "@id": "place:lambeth"
+        },
+        {
+          "@id": "place:southwark"
+        },
+        {
+          "@id": "place:lewisham"
+        },
+        {
+          "@id": "place:wandsworth"
+        },
+        {
+          "@id": "place:greenwich"
+        }
+      ],
+      "dcterms:description": "The five statutory Inner London boroughs south of the River Thames, as defined by Schedule 1 of the London Government Act 1963 (c.33). This is not a statutory administrative unit in itself — the region boundary is derived by combining the five qualifying borough boundaries.",
+      "inclusionRule": "Statutory Inner London boroughs south of the River Thames per Schedule 1 of the London Government Act 1963 (c.33). See boroughInclusionRule in the ConceptScheme node for full criteria and alternatives considered."
+    },
+    {
+      "@id": "place:lambeth",
+      "@type": [
+        "Place",
+        "administrativeArea"
+      ],
+      "name": "London Borough of Lambeth",
+      "alternateName": [
+        "Lambeth",
+        "LB Lambeth"
+      ],
+      "placeLevel": "level:borough",
+      "containedInPlace": {
+        "@id": "place:south-london"
+      },
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q204594",
+        "https://en.wikipedia.org/wiki/London_Borough_of_Lambeth",
+        "https://www.openstreetmap.org/relation/65606"
+      ],
+      "onsCode": "E09000022",
+      "osmId": "65606",
+      "governingBody": {
+        "@type": "GovernmentOrganization",
+        "name": "Lambeth Council",
+        "url": "https://www.lambeth.gov.uk",
+        "sameAs": "https://www.wikidata.org/entity/Q6478026"
+      },
+      "postalDistricts": [
+        "SW2",
+        "SW4",
+        "SW8",
+        "SW9",
+        "SW16",
+        "SE1",
+        "SE5",
+        "SE11",
+        "SE24",
+        "SE27"
+      ],
+      "tflZones": [
+        "1",
+        "2",
+        "3"
+      ],
+      "boundarySource": "https://statistics.data.gov.uk/id/statistical-geography/E09000022",
+      "containsPlace": [
+        {
+          "@id": "place:brixton"
+        },
+        {
+          "@id": "place:clapham"
+        },
+        {
+          "@id": "place:stockwell"
+        },
+        {
+          "@id": "place:kennington"
+        },
+        {
+          "@id": "place:streatham"
+        },
+        {
+          "@id": "place:norwood-lambeth"
+        },
+        {
+          "@id": "place:herne-hill"
+        },
+        {
+          "@id": "place:vauxhall"
+        }
+      ]
+    },
+    {
+      "@id": "place:brixton",
+      "@type": "Place",
+      "name": "Brixton",
+      "alternateName": [
+        "Brixton Town Centre",
+        "Central Brixton"
+      ],
+      "placeLevel": "level:neighbourhood",
+      "containedInPlace": {
+        "@id": "place:lambeth"
+      },
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q930557",
+        "https://en.wikipedia.org/wiki/Brixton",
+        "https://www.openstreetmap.org/relation/57506"
+      ],
+      "osmId": "57506",
+      "ward": {
+        "name": "Brixton Hill",
+        "onsCode": "E05013794",
+        "source": "https://statistics.data.gov.uk/id/statistical-geography/E05013794"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 51.4613,
+        "longitude": -0.1156
+      },
+      "postalDistricts": [
+        "SW2",
+        "SW9"
+      ],
+      "tflZones": [
+        "2"
+      ],
+      "containsPlace": [
+        {
+          "@id": "place:brixton-market"
+        },
+        {
+          "@id": "place:brixton-village"
+        },
+        {
+          "@id": "place:windrush-square"
+        },
+        {
+          "@id": "place:electric-avenue"
+        },
+        {
+          "@id": "place:pop-brixton"
+        }
+      ]
+    },
+    {
+      "@id": "place:brixton-market",
+      "@type": "Place",
+      "name": "Brixton Market",
+      "alternateName": [
+        "Brixton covered market",
+        "Atlantic Road Market"
+      ],
+      "placeLevel": "level:landmark",
+      "containedInPlace": {
+        "@id": "place:brixton"
+      },
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q4968073",
+        "https://en.wikipedia.org/wiki/Brixton_Market",
+        "https://www.openstreetmap.org/way/27394607"
+      ],
+      "osmId": "w27394607",
+      "wikidataId": "Q4968073",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 51.4617,
+        "longitude": -0.1147
+      },
+      "postalDistricts": [
+        "SW9"
+      ],
+      "boundarySource": "https://www.openstreetmap.org/way/27394607"
+    },
+    {
+      "@id": "place:brixton-village",
+      "@type": "Place",
+      "name": "Brixton Village",
+      "alternateName": [
+        "Granville Arcade",
+        "Brixton Village Market"
+      ],
+      "placeLevel": "level:landmark",
+      "containedInPlace": {
+        "@id": "place:brixton"
+      },
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q4968078",
+        "https://en.wikipedia.org/wiki/Brixton_Village",
+        "https://www.openstreetmap.org/way/27394608"
+      ],
+      "osmId": "w27394608",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 51.4614,
+        "longitude": -0.1142
+      },
+      "postalDistricts": [
+        "SW9"
+      ]
+    },
+    {
+      "@id": "place:windrush-square",
+      "@type": "Place",
+      "name": "Windrush Square",
+      "alternateName": [
+        "Brixton town square"
+      ],
+      "placeLevel": "level:landmark",
+      "containedInPlace": {
+        "@id": "place:brixton"
+      },
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q7998483",
+        "https://www.openstreetmap.org/way/27523890"
+      ],
+      "osmId": "w27523890",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 51.4621,
+        "longitude": -0.1143
+      },
+      "postalDistricts": [
+        "SW2"
+      ]
+    },
+    {
+      "@id": "place:clapham",
+      "@type": "Place",
+      "name": "Clapham",
+      "alternateName": [
+        "Clapham Village",
+        "Clapham Town"
+      ],
+      "placeLevel": "level:neighbourhood",
+      "containedInPlace": {
+        "@id": "place:lambeth"
+      },
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q909680",
+        "https://en.wikipedia.org/wiki/Clapham",
+        "https://www.openstreetmap.org/relation/57515"
+      ],
+      "osmId": "57515",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 51.4618,
+        "longitude": -0.138
+      },
+      "postalDistricts": [
+        "SW4",
+        "SW11"
+      ],
+      "tflZones": [
+        "2"
+      ],
+      "containsPlace": [
+        {
+          "@id": "place:clapham-common"
+        },
+        {
+          "@id": "place:clapham-high-st"
+        },
+        {
+          "@id": "place:clapham-junction"
+        }
+      ]
+    },
+    {
+      "@id": "place:southwark",
+      "@type": [
+        "Place",
+        "administrativeArea"
+      ],
+      "name": "London Borough of Southwark",
+      "alternateName": [
+        "Southwark",
+        "LB Southwark"
+      ],
+      "placeLevel": "level:borough",
+      "containedInPlace": {
+        "@id": "place:south-london"
+      },
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q181420",
+        "https://en.wikipedia.org/wiki/London_Borough_of_Southwark",
+        "https://www.openstreetmap.org/relation/65591"
+      ],
+      "onsCode": "E09000028",
+      "osmId": "65591",
+      "governingBody": {
+        "@type": "GovernmentOrganization",
+        "name": "Southwark Council",
+        "url": "https://www.southwark.gov.uk",
+        "sameAs": "https://www.wikidata.org/entity/Q7571932"
+      },
+      "postalDistricts": [
+        "SE1",
+        "SE5",
+        "SE15",
+        "SE16",
+        "SE17",
+        "SE21",
+        "SE22"
+      ],
+      "tflZones": [
+        "1",
+        "2"
+      ],
+      "boundarySource": "https://statistics.data.gov.uk/id/statistical-geography/E09000028",
+      "containsPlace": [
+        {
+          "@id": "place:peckham"
+        },
+        {
+          "@id": "place:bermondsey"
+        },
+        {
+          "@id": "place:dulwich"
+        },
+        {
+          "@id": "place:camberwell"
+        },
+        {
+          "@id": "place:rotherhithe"
+        },
+        {
+          "@id": "place:elephant-castle"
+        }
+      ]
+    },
+    {
+      "@id": "place:peckham",
+      "@type": "Place",
+      "name": "Peckham",
+      "alternateName": [
+        "Peckham Town Centre",
+        "Old Kent Road area"
+      ],
+      "placeLevel": "level:neighbourhood",
+      "containedInPlace": {
+        "@id": "place:southwark"
+      },
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q968547",
+        "https://en.wikipedia.org/wiki/Peckham",
+        "https://www.openstreetmap.org/relation/65597"
+      ],
+      "osmId": "65597",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 51.4739,
+        "longitude": -0.0694
+      },
+      "postalDistricts": [
+        "SE15"
+      ],
+      "tflZones": [
+        "2"
+      ],
+      "containsPlace": [
+        {
+          "@id": "place:peckham-rye"
+        },
+        {
+          "@id": "place:rye-lane"
+        },
+        {
+          "@id": "place:bold-tendencies"
+        }
+      ]
+    },
+    {
+      "@id": "place:wandsworth",
+      "@type": [
+        "Place",
+        "administrativeArea"
+      ],
+      "name": "London Borough of Wandsworth",
+      "alternateName": [
+        "Wandsworth",
+        "LB Wandsworth"
+      ],
+      "placeLevel": "level:borough",
+      "containedInPlace": {
+        "@id": "place:south-london"
+      },
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q203677",
+        "https://en.wikipedia.org/wiki/London_Borough_of_Wandsworth",
+        "https://www.openstreetmap.org/relation/65612"
+      ],
+      "onsCode": "E09000032",
+      "osmId": "65612",
+      "governingBody": {
+        "@type": "GovernmentOrganization",
+        "name": "Wandsworth Council",
+        "url": "https://www.wandsworth.gov.uk",
+        "sameAs": "https://www.wikidata.org/entity/Q7966124"
+      },
+      "postalDistricts": [
+        "SW4",
+        "SW8",
+        "SW11",
+        "SW12",
+        "SW15",
+        "SW17",
+        "SW18"
+      ],
+      "tflZones": [
+        "1",
+        "2",
+        "3"
+      ],
+      "boundarySource": "https://statistics.data.gov.uk/id/statistical-geography/E09000032",
+      "containsPlace": [
+        {
+          "@id": "place:tooting"
+        },
+        {
+          "@id": "place:balham"
+        },
+        {
+          "@id": "place:battersea"
+        },
+        {
+          "@id": "place:putney"
+        },
+        {
+          "@id": "place:wandsworth-town"
+        }
+      ]
+    },
+    {
+      "@id": "place:lewisham",
+      "@type": [
+        "Place",
+        "administrativeArea"
+      ],
+      "name": "London Borough of Lewisham",
+      "alternateName": [
+        "Lewisham",
+        "LB Lewisham"
+      ],
+      "placeLevel": "level:borough",
+      "containedInPlace": {
+        "@id": "place:south-london"
+      },
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q204605",
+        "https://en.wikipedia.org/wiki/London_Borough_of_Lewisham",
+        "https://www.openstreetmap.org/relation/65582"
+      ],
+      "onsCode": "E09000023",
+      "osmId": "65582",
+      "governingBody": {
+        "@type": "GovernmentOrganization",
+        "name": "Lewisham Council",
+        "url": "https://lewisham.gov.uk",
+        "sameAs": "https://www.wikidata.org/entity/Q6539776"
+      },
+      "postalDistricts": [
+        "SE4",
+        "SE6",
+        "SE8",
+        "SE10",
+        "SE12",
+        "SE13",
+        "SE14",
+        "SE23",
+        "SE26"
+      ],
+      "tflZones": [
+        "2",
+        "3",
+        "4"
+      ],
+      "boundarySource": "https://statistics.data.gov.uk/id/statistical-geography/E09000023",
+      "containsPlace": [
+        {
+          "@id": "place:deptford"
+        },
+        {
+          "@id": "place:forest-hill"
+        },
+        {
+          "@id": "place:lewisham-town"
+        },
+        {
+          "@id": "place:catford"
+        },
+        {
+          "@id": "place:sydenham"
+        }
+      ]
+    },
+    {
+      "@id": "place:greenwich",
+      "@type": [
+        "Place",
+        "administrativeArea"
+      ],
+      "name": "Royal Borough of Greenwich",
+      "alternateName": [
+        "Greenwich",
+        "RB Greenwich"
+      ],
+      "placeLevel": "level:borough",
+      "containedInPlace": {
+        "@id": "place:south-london"
+      },
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q204598",
+        "https://en.wikipedia.org/wiki/Royal_Borough_of_Greenwich",
+        "https://www.openstreetmap.org/relation/65579"
+      ],
+      "onsCode": "E09000011",
+      "osmId": "65579",
+      "governingBody": {
+        "@type": "GovernmentOrganization",
+        "name": "Greenwich Council",
+        "url": "https://www.royalgreenwich.gov.uk",
+        "sameAs": "https://www.wikidata.org/entity/Q21010040"
+      },
+      "postalDistricts": [
+        "SE3",
+        "SE7",
+        "SE9",
+        "SE10",
+        "SE18",
+        "SE28"
+      ],
+      "tflZones": [
+        "2",
+        "3",
+        "4"
+      ],
+      "boundarySource": "https://statistics.data.gov.uk/id/statistical-geography/E09000011",
+      "containsPlace": [
+        {
+          "@id": "place:greenwich-town"
+        },
+        {
+          "@id": "place:blackheath"
+        },
+        {
+          "@id": "place:woolwich"
+        },
+        {
+          "@id": "place:charlton"
+        }
+      ]
+    }
+  ],
+  "_meta": {
+    "schemaVersion": "0.2.0",
+    "ontologyStatus": "prototype",
+    "coverage": "Five statutory Inner London boroughs south of the Thames (London Government Act 1963, Schedule 1): Lambeth, Southwark, Lewisham, Wandsworth, Greenwich. Selected neighbourhoods and landmarks within each. Borough inclusion rule now formally documented.",
+    "primarySources": {
+      "ONS": {
+        "description": "Office for National Statistics statistical geographies",
+        "baseUrl": "https://statistics.data.gov.uk/",
+        "licence": "Open Government Licence v3.0",
+        "licenceUrl": "https://www.nationalarchives.gov.uk/doc/open-government-licence/",
+        "used_for": [
+          "onsCode",
+          "borough boundaries",
+          "ward boundaries"
+        ]
+      },
+      "OrdnanceSurvey": {
+        "description": "OS Boundary-Line and AddressBase products",
+        "baseUrl": "https://osdatahub.os.uk/",
+        "licence": "OS Open Data Licence",
+        "licenceUrl": "https://www.ordnancesurvey.co.uk/documents/licensing/data-licence.pdf",
+        "used_for": [
+          "official boundary geometries",
+          "UPRN references"
+        ]
+      },
+      "OpenStreetMap": {
+        "description": "OpenStreetMap collaborative geographic database",
+        "baseUrl": "https://www.openstreetmap.org/",
+        "licence": "Open Database Licence (ODbL) 1.0",
+        "licenceUrl": "https://opendatacommons.org/licenses/odbl/",
+        "used_for": [
+          "osmId",
+          "neighbourhood boundaries",
+          "landmark geometries",
+          "aliases"
+        ]
+      },
+      "Wikidata": {
+        "description": "Wikidata linked open data knowledge base",
+        "baseUrl": "https://www.wikidata.org/",
+        "licence": "Creative Commons CC0 1.0",
+        "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "used_for": [
+          "wikidataId",
+          "sameAs links",
+          "aliases",
+          "cross-referencing"
+        ]
+      },
+      "TfL": {
+        "description": "Transport for London Open Data",
+        "baseUrl": "https://api.tfl.gov.uk/",
+        "licence": "Transport for London Open Data Licence",
+        "licenceUrl": "https://tfl.gov.uk/corporate/terms-and-conditions/transport-data-service",
+        "used_for": [
+          "tflZones",
+          "tube/rail station references"
+        ]
+      },
+      "RoyalMail": {
+        "description": "Royal Mail Postcode Address File (PAF)",
+        "baseUrl": "https://www.royalmail.com/business/data",
+        "licence": "Commercial — postal districts used as reference only",
+        "used_for": [
+          "postalDistricts (indicative only)"
+        ]
+      }
+    },
+    "linkedDataVocabularies": {
+      "schema.org": "https://schema.org/",
+      "SKOS": "http://www.w3.org/2004/02/skos/core#",
+      "Dublin Core": "http://purl.org/dc/terms/",
+      "GeoNames": "http://www.geonames.org/ontology#",
+      "OS AdminGeo": "http://data.ordnancesurvey.co.uk/ontology/admingeo/"
+    },
+    "contributingGuidelines": "https://github.com/southlondon-place/ontology/CONTRIBUTING.md",
+    "issueTracker": "https://github.com/southlondon-place/ontology/issues",
+    "changelog": [
+      {
+        "version": "0.2.0",
+        "date": "2025-01-01",
+        "changes": [
+          "Added formal boroughInclusionRule to ConceptScheme node, citing London Government Act 1963 (c.33) Schedule 1 as the authority for borough inclusion.",
+          "Removed Croydon, Bromley, Merton, Sutton, and Kingston from containsPlace on the south-london region node — these are Outer London boroughs outside scope.",
+          "Updated south-london region node boundarySource to cite the 1963 Act rather than the ONS sub-region code.",
+          "Added inclusionRule property to south-london region node.",
+          "Added explicitExclusions, greenwichNote, and alternativeDefinitionsConsidered to boroughInclusionRule for transparency.",
+          "Updated coverage description in _meta."
+        ]
+      },
+      {
+        "version": "0.1.0",
+        "date": "2025-01-01",
+        "changes": [
+          "Initial prototype schema."
+        ]
+      }
+    ]
+  }
+}
