@@ -89,3 +89,9 @@ If you use this ontology in research or a derived project, please cite it as:
 > South London Post (2025). *South London Place Ontology*, v0.2.0. GitHub. https://github.com/lloydshep/southlondonpost
 
 A Zenodo DOI for formal academic citation will be registered at v1.0.0.
+
+## Acknowledgements
+
+This project was researched and structured with assistance from [Claude](https://www.anthropic.com) (Anthropic). Claude contributed to the ontology design, schema authoring, documentation drafting, and borough inclusion research. All source attributions, legislative citations, and place data have been independently verified by the project author.
+
+This is noted in machine-readable form in the `_meta.provenance` field of the ontology JSON-LD file.

@@ -811,6 +811,14 @@
           "Initial prototype schema."
         ]
       }
-    ]
+    ],
+    "provenance": {
+      "note": "This ontology was researched and structured with assistance from Claude (Anthropic). All source attributions, legislative citations, and place data have been independently verified by the project author.",
+      "aiAssistant": "Claude Sonnet 4.6",
+      "aiDeveloper": "Anthropic",
+      "anthropicUrl": "https://www.anthropic.com",
+      "humanAuthor": "lloydshep",
+      "repositoryUrl": "https://github.com/lloydshep/southlondonpost"
+    }
   }
 }
